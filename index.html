@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>King Lanches - Peça Online e Delicie-se!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+        h1, h2 { font-family: 'Oswald', sans-serif; }
+        .item-card { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
+        .item-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .item-card img { height: 200px; object-fit: cover; width: 100%; border-radius: 8px; }
+        .btn-primary {
+            background: linear-gradient(90deg, #FF7E5F 0%, #FEB47B 100%); /* Laranja vibrante */
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #FEB47B 0%, #FF7E5F 100%);
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.4);
+        }
+        .whatsapp-btn {
+            background-color: #25D366; /* Verde WhatsApp oficial */
+            transition: background-color 0.3s ease;
+        }
+        .whatsapp-btn:hover {
+            background-color: #1DA851;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <header class="bg-gradient-to-r from-red-700 to-red-900 text-white py-6 text-center shadow-lg">
+        <h1 class="text-5xl font-bold tracking-tight uppercase">🍔 King Lanches</h1>
+        <p class="text-xl mt-2 font-light">Seu pedido favorito, agora em um clique!</p>
+        <p class="text-md mt-1 italic">Lanches gourmet, porções irresistíveis e sobremesas que encantam.</p>
+    </header>
+
+    <main class="p-6 max-w-7xl mx-auto">
+        <section class="my-10 text-center">
+            <h2 class="text-4xl font-bold text-red-800 mb-6">Nosso Cardápio Exclusivo 👑</h2>
+            <p class="text-lg text-gray-700 max-w-2xl mx-auto">Preparado com os ingredientes mais frescos e o toque especial que só o King Lanches tem. Explore e delicie-se!</p>
+        </section>
+
+        <div id="menu" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
+
+        <div class="mt-12 p-8 bg-white rounded-xl shadow-lg border border-gray-100">
+            <h2 class="text-3xl font-bold text-red-800 mb-6 border-b pb-3">Seu Pedido 📝</h2>
+            <ul id="pedido" class="space-y-4 mb-6">
+                </ul>
+            <div class="mb-6">
+                <label class="block font-semibold mb-2 text-gray-700" for="observacoes">Observações Especiais:</label>
+                <textarea id="observacoes" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" rows="4" placeholder="Ex: Sem picles no X-Salada, carne bem passada no X-Burguer, adicionar maionese extra..."></textarea>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 flex justify-between items-center">Total: <span class="text-red-600">R$ <span id="total">0.00</span></span></p>
+            <button onclick="enviarPedido()" class="whatsapp-btn text-white px-8 py-4 rounded-full text-xl font-semibold mt-8 w-full flex items-center justify-center space-x-3 shadow-md hover:shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.6-3.807-1.6-5.918 0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12c-1.9-.009-3.8-.57-5.498-1.6l-6.162 1.687zm6.559-2.052l-1.112.304 1.13-4.116c-.767-1.01-1.233-2.227-1.233-3.523 0-4.634 3.766-8.4 8.4-8.4s8.4 3.766 8.4 8.4-3.766 8.4-8.4 8.4c-1.151 0-2.261-.284-3.237-.898l-4.328 1.181zm4.076-1.628c.3-.121.57-.291.81-.497.643-.538 1.144-.82 1.847-.723.426.061.737.146.992.36.273.231.543.585.733.993.183.398.375.879.435 1.09.07.22.032.47-.074.7-.105.228-.27.387-.457.513-.186.126-.388.19-.597.23-.207.038-.415.011-.61-.065-.195-.075-.415-.178-.65-.3-.383-.196-.867-.47-1.425-.97-.939-.844-1.579-1.928-1.782-2.147-.2-.218-.014-.33.155-.494z"/></svg>
+                Enviar Pedido via WhatsApp
+            </button>
+        </div>
+    </main>
+
+    <footer class="text-center py-6 text-sm text-gray-500 bg-gray-100 mt-12 border-t border-gray-200">
+        <p>&copy; 2025 King Lanches - Todos os direitos reservados.</p>
+        <p class="mt-1">Desenvolvido com <span class="text-red-500">&hearts;</span> para você!</p>
+    </footer>
+
+    <script>
+        const cardapio = [
+            // Imagens do Pexels/Pixabay - gratuitas para uso e relevantes!
+            { nome: "X-Burguer Clássico", preco: 18.50, imagem: "./src/img/xburguer.png" }, // Hambúrguer clássico
+            { nome: "X-Salada Especial", preco: 22.00, imagem: "./src/img/xsalada.png" }, // Hambúrguer com salada
+            { nome: "Batata Frita Crocante", preco: 12.00, imagem: "./src/img/batata.png" }, // Batata frita
+            { nome: "Coca-Cola Gelada 350ml", preco: 7.50, imagem: "./src/img/coca_cola.webp" }, // Coca-Cola
+            { nome: "Açaí na Tigela 300ml", preco: 15.00, imagem: "./src/img/acai.jpg" }, // Açaí
+            { nome: "Sorvete Artesanal", preco: 10.00, imagem: "./src/img/sorvete.jpg" }, // Sorvete
+            { nome: "Porção de Anéis de Cebola", preco: 16.00, imagem: "./src/img/cebola.webp" }, // Anéis de cebola
+            { nome: "Milkshake de Chocolate", preco: 14.00, imagem: "./src/img/milkshake.webp" }, // Milkshake de chocolate
+        ];
+
+        let pedido = [];
+
+        const menu = document.getElementById("menu");
+        const listaPedido = document.getElementById("pedido");
+        const totalSpan = document.getElementById("total");
+
+        // Função para criar um cartão de item do menu atraente
+        function createMenuItemCard(item, index) {
+            const card = document.createElement("div");
+            card.className = "item-card bg-white rounded-xl shadow-md p-5 flex flex-col items-center border border-gray-100";
+            card.innerHTML = `
+                <img src="${item.imagem}" alt="${item.nome}" class="w-full rounded-lg mb-4 object-cover">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">${item.nome}</h3>
+                <p class="text-2xl font-bold text-red-600 mb-4">R$ ${item.preco.toFixed(2)}</p>
+                <button onclick="adicionarItem(${index})" class="btn-primary text-white px-6 py-2 rounded-full font-semibold hover:scale-105 transition-transform duration-300 ease-in-out w-full">
+                    Adicionar ao Pedido
+                </button>
+            `;
+            return card;
+        }
+
+        cardapio.forEach((item, index) => {
+            menu.appendChild(createMenuItemCard(item, index));
+        });
+
+        function adicionarItem(index) {
+            const item = cardapio[index];
+            const existente = pedido.find(p => p.nome === item.nome);
+            if (existente) {
+                existente.quantidade++;
+            } else {
+                pedido.push({ nome: item.nome, preco: item.preco, quantidade: 1 });
+            }
+            atualizarPedido();
+        }
+
+        function removerItem(nome) {
+            const index = pedido.findIndex(p => p.nome === nome);
+            if (index > -1) {
+                if (pedido[index].quantidade > 1) {
+                    pedido[index].quantidade--;
+                } else {
+                    pedido.splice(index, 1);
+                }
+                atualizarPedido();
+            }
+        }
+
+        function atualizarPedido() {
+            listaPedido.innerHTML = "";
+            let total = 0;
+            if (pedido.length === 0) {
+                listaPedido.innerHTML = '<li class="text-center text-gray-500 italic">Seu carrinho está vazio. Adicione itens do cardápio!</li>';
+            } else {
+                pedido.forEach(item => {
+                    const li = document.createElement("li");
+                    li.className = "flex justify-between items-center bg-gray-50 p-3 rounded-lg shadow-sm";
+                    li.innerHTML = `
+                        <span class="text-lg text-gray-800">${item.nome} <span class="font-bold">x${item.quantidade}</span></span>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-lg font-semibold text-red-600">R$ ${(item.preco * item.quantidade).toFixed(2)}</span>
+                            <button onclick="removerItem('${item.nome}')" class="bg-red-200 text-red-700 px-3 py-1 rounded-full hover:bg-red-300 transition-colors font-bold text-lg">-</button>
+                            <button onclick="adicionarItem(${cardapio.findIndex(c => c.nome === item.nome)})" class="bg-green-200 text-green-700 px-3 py-1 rounded-full hover:bg-green-300 transition-colors font-bold text-lg">+</button>
+                        </div>
+                    `;
+                    listaPedido.appendChild(li);
+                    total += item.preco * item.quantidade;
+                });
+            }
+            totalSpan.textContent = total.toFixed(2);
+        }
+
+        function enviarPedido() {
+            if (pedido.length === 0) {
+                alert("Por favor, adicione itens ao seu pedido antes de enviá-lo!");
+                return;
+            }
+            const obs = document.getElementById("observacoes").value;
+            let mensagem = "Olá King Lanches, gostaria de fazer o seguinte pedido:\n\n";
+            pedido.forEach(item => {
+                mensagem += `* ${item.nome} (x${item.quantidade}) - R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
+            });
+            mensagem += `\n*Total do Pedido:* R$ ${totalSpan.textContent}`;
+            if (obs.trim()) mensagem += `\n\n*Observações:* ${obs}`;
+            mensagem += `\n\nObrigado!`;
+
+            const whatsapp = "5511995481647"; // COLOQUE O NÚMERO DE TELEFONE CORRETO AQUI COM DDD (EX: 5511987654321)
+            const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(mensagem)}`;
+            window.open(url, "_blank");
+        }
+
+        // Atualização inicial para exibir a mensagem de carrinho vazio
+        atualizarPedido();
+    </script>
+</body>
+</html>
